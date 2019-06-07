@@ -1,4 +1,12 @@
 body {
-	display: grid;
-	grid-template-columns: 2fr 8fr
+  display: grid;
+  grid-template-columns: 2fr 8fr;
+}
+
+ul {
+  list-style: none;
+}
+
+#list-panel {
+  width: 300px;
 }
