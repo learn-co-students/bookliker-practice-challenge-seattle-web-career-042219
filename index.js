@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 const booksUrl = "http://localhost:3000/books";
+let viewBoolean = true;
 
 function getBooks() {
   fetch(booksUrl)
@@ -62,16 +63,24 @@ function showBoook(book) {
 }
 
 function addLike(book) {
-  let firstPatch = null;
-  let id = book.id;
+  let bookId = book.id;
 
   let li = document.createElement("li");
   li.textContent = `{"id":1, username:"pouros" }`;
-  let users = document.getElementById("userList");
-  users.appendChild(li);
-  //   firstPatch = !firstPatch;
+  li.id = "userLi";
 
-  fetch(booksUrl + "/" + id, {
+  let users = document.getElementById("userList");
+  if (users.innerHTML) {
+    viewBoolean = !viewBoolean;
+    console.log("viewBoolean=", viewBoolean);
+  } else {
+    users.appendChild(li);
+    letviewBoolean = true;
+  }
+
+  let appendedLi = document.getElementById("userLi");
+
+  fetch(booksUrl + "/" + bookId, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -83,8 +92,9 @@ function addLike(book) {
       return response.json();
     })
     .then(book => {
-      firstPatch ? users.addClass(hiddden) : users.removeClass(hiddden);
-      firstPatch = !firstPatch;
+      viewBoolean
+        ? appendedLi.classList.remove("hidden")
+        : appendedLi.classList.add("hidden");
     })
     .catch(err => console.log(err));
 }

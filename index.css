@@ -12,5 +12,5 @@ ul {
 }
 
 .hidden {
-  visibility: none;
+  display: none;
 }
