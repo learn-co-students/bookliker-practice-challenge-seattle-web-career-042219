@@ -54,7 +54,6 @@ function showBoook(book) {
       book.users[i].username
     }   
     }`;
-    // li.textContent = "username: " + book.users[i].username;
     ul.appendChild(li);
   }
   div.appendChild(ul);
@@ -63,12 +62,14 @@ function showBoook(book) {
 }
 
 function addLike(book) {
+  let firstPatch = null;
   let id = book.id;
 
   let li = document.createElement("li");
-  li.textContent = { id: 1, username: "pouros" };
-  let users = document.getElementById("userList").appendChild(li);
-  console.log("users=", users);
+  li.textContent = `{"id":1, username:"pouros" }`;
+  let users = document.getElementById("userList");
+  users.appendChild(li);
+  //   firstPatch = !firstPatch;
 
   fetch(booksUrl + "/" + id, {
     method: "PATCH",
@@ -81,8 +82,9 @@ function addLike(book) {
     .then(response => {
       return response.json();
     })
-    .then(json => {
-      return console.log(json);
+    .then(book => {
+      firstPatch ? users.addClass(hiddden) : users.removeClass(hiddden);
+      firstPatch = !firstPatch;
     })
     .catch(err => console.log(err));
 }

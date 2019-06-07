@@ -10,3 +10,7 @@ ul {
 #list-panel {
   width: 300px;
 }
+
+.hidden {
+  visibility: none;
+}
