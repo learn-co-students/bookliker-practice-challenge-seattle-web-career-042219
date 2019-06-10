@@ -28,13 +28,14 @@ function showBook(book) {
   let showPanel = document.getElementById("show-panel");
 
   let div = document.createElement("div");
-  let ul = document.createElement("ul");
-  ul.setAttribute("id", "usersList");
+  let li = document.createElement("li");
   let pID = document.createElement("p");
   let h3 = document.createElement("h3");
   let pDesc = document.createElement("p");
   let img = document.createElement("img");
   let button = document.createElement("button");
+  let ul = document.createElement("ul");
+  ul.id = "usersList";
 
   pID.textContent = "ID: " + book.id;
   h3.textContent = "Title:" + book.title;
@@ -43,13 +44,19 @@ function showBook(book) {
   button.textContent = "Like This Book";
   button.addEventListener("click", () => addLike(book));
 
+  showPanel.innerHTML = "";
+
   div.appendChild(pID);
   div.appendChild(h3);
   div.appendChild(pDesc);
   div.appendChild(img);
-
-  appendBookUsers(book);
-
+  for (let i = 0; i < book.users.length; i++) {
+    let li = document.createElement("li");
+    li.textContent = `{"id":${book.users[i].id}, "username":${
+      book.users[i].username
+    }}`;
+    ul.appendChild(li);
+  }
   div.appendChild(ul);
   div.appendChild(button);
   showPanel.appendChild(div);
