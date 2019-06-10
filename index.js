@@ -19,26 +19,27 @@ function renderBooks(books) {
 function renderBook(book) {
   let bookList = document.getElementById("list");
   let li = document.createElement("li");
-  li.textContent = "Title:" + book.title;
-  li.addEventListener("click", () => showBoook(book));
+  li.textContent = "Title:  " + book.title + " " + book.users.length;
+  li.addEventListener("click", () => showBook(book));
   bookList.appendChild(li);
 }
 
-function showBoook(book) {
+function showBook(book) {
   let showPanel = document.getElementById("show-panel");
+
   let div = document.createElement("div");
+  let li = document.createElement("li");
   let pID = document.createElement("p");
   let h3 = document.createElement("h3");
   let pDesc = document.createElement("p");
   let img = document.createElement("img");
-  let ul = document.createElement("ul");
-  ul.id = "userList";
-
   let button = document.createElement("button");
+  let ul = document.createElement("ul");
+  ul.id = "usersList";
 
   pID.textContent = "ID: " + book.id;
-  h3.textContent = "Title: " + book.title;
-  pDesc.textContent = "ID: " + book.description;
+  h3.textContent = "Title:" + book.title;
+  pDesc.textContent = "Content: " + book.description;
   img.src = book.img_url;
   button.textContent = "Like This Book";
   button.addEventListener("click", () => addLike(book));
@@ -53,8 +54,7 @@ function showBoook(book) {
     let li = document.createElement("li");
     li.textContent = `{"id":${book.users[i].id}, "username":${
       book.users[i].username
-    }   
-    }`;
+    }}`;
     ul.appendChild(li);
   }
   div.appendChild(ul);
@@ -62,39 +62,41 @@ function showBoook(book) {
   showPanel.appendChild(div);
 }
 
-function addLike(book) {
-  let bookId = book.id;
-
-  let li = document.createElement("li");
-  li.textContent = `{"id":1, username:"pouros" }`;
-  li.id = "userLi";
-
-  let users = document.getElementById("userList");
-  if (users.innerHTML) {
-    viewBoolean = !viewBoolean;
-    console.log("viewBoolean=", viewBoolean);
-  } else {
-    users.appendChild(li);
-    letviewBoolean = true;
+function appendBookUsers(book) {
+  let usersList = document.getElementById("usersList");
+  usersList.innerHTML = "";
+  for (let i = 0; i < book.users.length; i++) {
+    let li = document.createElement("li");
+    li.textContent = `{"id":${book.users[i].id}, "username":${
+      book.users[i].username
+    }}`;
+    usersList.appendChild(li);
   }
+}
 
-  let appendedLi = document.getElementById("userLi");
+function addLike(book) {
+  let userExists = false;
+  for (let i = 0; i < book.users.length; i++) {
+    if (book.users[i].id === 1) {
+      userExists = true;
+      break;
+    }
+  }
+  userExists
+    ? book.users.pop()
+    : book.users.push({ id: 1, username: "pouros" });
 
-  fetch(booksUrl + "/" + bookId, {
+  fetch(booksUrl + "/" + book.id, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json"
     },
-    body: JSON.stringify({ users: users })
+    body: JSON.stringify({ users: book.users })
   })
     .then(response => {
       return response.json();
     })
-    .then(book => {
-      viewBoolean
-        ? appendedLi.classList.remove("hidden")
-        : appendedLi.classList.add("hidden");
-    })
+    .then(showBook(book))
     .catch(err => console.log(err));
 }
