@@ -28,14 +28,14 @@ function showBook(book) {
   let showPanel = document.getElementById("show-panel");
 
   let div = document.createElement("div");
-  let li = document.createElement("li");
+  let ul = document.createElement("ul");
+  ul.id = "usersList";
+
   let pID = document.createElement("p");
   let h3 = document.createElement("h3");
   let pDesc = document.createElement("p");
   let img = document.createElement("img");
   let button = document.createElement("button");
-  let ul = document.createElement("ul");
-  ul.id = "usersList";
 
   pID.textContent = "ID: " + book.id;
   h3.textContent = "Title:" + book.title;
@@ -60,18 +60,6 @@ function showBook(book) {
   div.appendChild(ul);
   div.appendChild(button);
   showPanel.appendChild(div);
-}
-
-function appendBookUsers(book) {
-  let usersList = document.getElementById("usersList");
-  usersList.innerHTML = "";
-  for (let i = 0; i < book.users.length; i++) {
-    let li = document.createElement("li");
-    li.textContent = `{"id":${book.users[i].id}, "username":${
-      book.users[i].username
-    }}`;
-    usersList.appendChild(li);
-  }
 }
 
 function addLike(book) {
