@@ -3,13 +3,12 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 const booksUrl = "http://localhost:3000/books";
-let viewBoolean = true;
 
 function getBooks() {
   fetch(booksUrl)
     .then(result => result.json())
     .then(books => renderBooks(books))
-    .catch(err => console.log("Error", err));
+    .catch(err => console.log("Error=", err));
 }
 
 function renderBooks(books) {
