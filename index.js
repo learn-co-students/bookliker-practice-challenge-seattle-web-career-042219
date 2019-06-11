@@ -72,7 +72,6 @@ function addLike(book) {
   userExists
     ? book.users.pop()
     : book.users.push({ id: 1, username: "pouros" });
-
   fetch(booksUrl + "/" + book.id, {
     method: "PATCH",
     headers: {
