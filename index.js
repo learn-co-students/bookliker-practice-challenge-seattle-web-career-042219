@@ -29,7 +29,8 @@ function showBook(book) {
 
   let div = document.createElement("div");
   let ul = document.createElement("ul");
-  ul.id = "usersList";
+  // ul.id = "usersList";
+  ul.setAttribute("id", "usersList");
 
   let pID = document.createElement("p");
   let h3 = document.createElement("h3");
