@@ -8,7 +8,7 @@ function getBooks() {
   fetch(booksUrl)
     .then(result => result.json())
     .then(books => renderBooks(books))
-    .catch(err => console.log("Error", err));
+    .catch(err => console.log("Error=", err));
 }
 
 function renderBooks(books) {
@@ -73,7 +73,6 @@ function addLike(book) {
   userExists
     ? book.users.pop()
     : book.users.push({ id: 1, username: "pouros" });
-
   fetch(booksUrl + "/" + book.id, {
     method: "PATCH",
     headers: {
