@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 const booksUrl = "http://localhost:3000/books";
-let viewBoolean = true;
 
 function getBooks() {
   fetch(booksUrl)
@@ -86,6 +85,7 @@ function addLike(book) {
     .then(response => {
       return response.json();
     })
+    .then(json => console.log(json))
     .then(showBook(book))
     .catch(err => console.log(err));
 }
